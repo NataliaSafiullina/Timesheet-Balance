@@ -4,8 +4,10 @@
 
 import dao.EmployeeDao;
 import dao.PositionDao;
+import dao.TaskDao;
 import entity.Employee;
 import entity.Position;
+import entity.Task;
 
 import java.io.FileNotFoundException;
 import java.text.ParseException;
@@ -34,6 +36,10 @@ public class Main {
                         positions.forEach(p -> System.out.println(p.getPosition() + "\t" + p.getPositionRate()));
                         break;
                     case "task":
+                        System.out.println("Tasks list: ");
+                        TaskDao tasks_dao = new TaskDao();
+                        List<Task> tasks = tasks_dao.getTasks();
+                        tasks.forEach(t -> System.out.println(t.getTaskID() + "\t" + t.getTaskName()));
                         break;
                 }
                 break;

@@ -28,14 +28,21 @@ public class TaskDao {
     }
 
     public List<Task> getTasks() {
-        return null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("from Task", Task.class).list();
+        }  catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Task getTaskByName(String fp_Name) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            return session.createQuery("from Task where TaskName = 'ANALYTICS-367' ", Task.class).list().get(0);
-
+            Query<Task> query = session.createQuery("from Task where TaskName = :P1 ", Task.class);
+            query.setParameter("P1", fp_Name);
+            return query.list().get(0);
         }  catch (Exception e) {
             e.printStackTrace();
             return null;

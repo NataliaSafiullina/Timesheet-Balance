@@ -34,8 +34,8 @@ public class HibernateUtil {
 
                 configuration.addAnnotatedClass(Position.class);
                 configuration.addAnnotatedClass(Employee.class);
-//                configuration.addAnnotatedClass(Task.class);
-//                configuration.addAnnotatedClass(Timesheet.class);
+                configuration.addAnnotatedClass(Task.class);
+                configuration.addAnnotatedClass(Timesheet.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

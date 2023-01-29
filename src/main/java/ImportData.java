@@ -31,6 +31,7 @@ public class ImportData {
             Integer RateFile = s.nextInt();
 
             // create new object as entity Position
+            // TODO Learn why creating a new entity is in while. Is it possible to use the same entity a few times.
             Position position = new Position();
             // data from file save into entity fields
             position.setPosition(PositionFile);
@@ -73,6 +74,7 @@ public class ImportData {
     public static void importTimesheet(String filename) throws FileNotFoundException, ParseException {
         TaskDao taskDao = new TaskDao();
         TimesheetDao timesheetDao = new TimesheetDao();
+        int ID;
         // DATA_PATH is described at the beginning
         Scanner scanner = new Scanner(new File(DATA_PATH + File.separatorChar + filename));
         // read lines one by one
@@ -80,19 +82,37 @@ public class ImportData {
             // take line from file
             String line = scanner.nextLine();
             Scanner s = new Scanner(line).useDelimiter(",");
+
             // read task name from line
             String TaskNameFile = s.next();
-            // create new object as entity Task
-            Task task = new Task();
-            // data from file save into entity field Name
-            task.setTaskName(TaskNameFile);
-            // save Task into DB
-            taskDao.saveTask(task);
+            // get Task by name from file
+            Task task_obj = taskDao.getTaskByName(TaskNameFile);
+            System.out.print("Task name = ");
+            System.out.println(TaskNameFile);
 
-            // get TaskID by name
-            task = taskDao.getTaskByName(TaskNameFile);
-            System.out.println(task.getTaskID());
-
+            if(task_obj != null) {
+                // get TaskID
+                ID = task_obj.getTaskID();
+                // task exists in DB;
+                System.out.print("Task exists, ID = ");
+                System.out.println(ID);
+            }
+            else {
+                // task does not exist, we need to create it
+                System.out.println("Task does not exist, ID = null");
+                // create new object as entity Task
+                Task task_new = new Task();
+                // data from file save into entity field Name
+                task_new.setTaskName(TaskNameFile);
+                // save Task into DB
+                taskDao.saveTask(task_new);
+                // get Task by name from file
+                task_new = taskDao.getTaskByName(TaskNameFile);
+                // get TaskID of the task
+                ID = task_new.getTaskID();
+                System.out.print("New Task ID = ");
+                System.out.println(ID);
+            }
 
 /*
             // read employee position from line
@@ -106,7 +126,8 @@ public class ImportData {
             // save employee into DB
             employeeDao.saveEmployee(employee);
 
-            System.out.println(line);*/
+            System.out.println(line);
+*/
         }
         scanner.close();
 
