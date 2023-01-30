@@ -1,8 +1,10 @@
 package dao;
 
 import entity.Employee;
+import entity.Task;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import utils.HibernateUtil;
 
 import java.util.List;
@@ -36,7 +38,15 @@ public class EmployeeDao {
         }
     }
 
-    public Employee getEmployee(String employeeName) {
-        return null;
+    public Employee getEmployeeByName(String employeeName) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Query<Task> query = session.createQuery("from Employee where Name = :P1 ", Task.class);
+            query.setParameter("P1", fp_Name);
+            return query.list().get(0);
+        }  catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -77,14 +77,24 @@ public class ImportData {
         int ID;
         // DATA_PATH is described at the beginning
         Scanner scanner = new Scanner(new File(DATA_PATH + File.separatorChar + filename));
+        // formatter for dates
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
         // read lines one by one
         while (scanner.hasNextLine()) {
             // take line from file
             String line = scanner.nextLine();
             Scanner s = new Scanner(line).useDelimiter(",");
 
-            // read task name from line
+            // read Task name from the line
             String TaskNameFile = s.next();
+            // read Employee name from the line
+            String EmployeeNameFile = s.next();
+            // read start time from the line
+            Date StartTimeFile = dateFormat.parse(s.next());
+            // read finish time from the line
+            Date FinishTimeFile = dateFormat.parse(s.next());
+
             // get Task by name from file
             Task task_obj = taskDao.getTaskByName(TaskNameFile);
             System.out.print("Task name = ");
@@ -114,20 +124,9 @@ public class ImportData {
                 System.out.println(ID);
             }
 
-/*
-            // read employee position from line
-            String EmployeePositionFile = s.next();
 
-            // create new object as entity Employee
-            Employee employee = new Employee();
-            // data from file save into entity fields Name and Position
-            employee.setEmployeeName(EmployeeNameFile);
-            employee.setEmployeePosition(EmployeePositionFile);
-            // save employee into DB
-            employeeDao.saveEmployee(employee);
 
-            System.out.println(line);
-*/
+
         }
         scanner.close();
 
