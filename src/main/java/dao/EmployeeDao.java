@@ -41,8 +41,8 @@ public class EmployeeDao {
     public Employee getEmployeeByName(String employeeName) {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            Query<Task> query = session.createQuery("from Employee where Name = :P1 ", Task.class);
-            query.setParameter("P1", fp_Name);
+            Query<Employee> query = session.createQuery("from Employee where EmployeeName = :P1 ", Employee.class);
+            query.setParameter("P1", employeeName);
             return query.list().get(0);
         }  catch (Exception e) {
             e.printStackTrace();

@@ -5,6 +5,7 @@ import dao.TimesheetDao;
 import entity.Employee;
 import entity.Position;
 import entity.Task;
+import entity.Timesheet;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -74,17 +75,21 @@ public class ImportData {
     public static void importTimesheet(String filename) throws FileNotFoundException, ParseException {
         TaskDao taskDao = new TaskDao();
         TimesheetDao timesheetDao = new TimesheetDao();
+        EmployeeDao employeeDao = new EmployeeDao();
         int ID;
         // DATA_PATH is described at the beginning
         Scanner scanner = new Scanner(new File(DATA_PATH + File.separatorChar + filename));
         // formatter for dates
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         // read lines one by one
         while (scanner.hasNextLine()) {
             // take line from file
             String line = scanner.nextLine();
             Scanner s = new Scanner(line).useDelimiter(",");
+
+            // create object timesheet as entity Timesheet
+            Timesheet timesheet = new Timesheet();
 
             // read Task name from the line
             String TaskNameFile = s.next();
@@ -95,10 +100,17 @@ public class ImportData {
             // read finish time from the line
             Date FinishTimeFile = dateFormat.parse(s.next());
 
-            // get Task by name from file
-            Task task_obj = taskDao.getTaskByName(TaskNameFile);
             System.out.print("Task name = ");
             System.out.println(TaskNameFile);
+            System.out.print("Employee name = ");
+            System.out.println(EmployeeNameFile);
+            System.out.print("Start time = ");
+            System.out.println(StartTimeFile);
+            System.out.print("Finish time = ");
+            System.out.println(FinishTimeFile);
+
+            // get Task by name from file
+            Task task_obj = taskDao.getTaskByName(TaskNameFile);
 
             if(task_obj != null) {
                 // get TaskID
@@ -123,9 +135,22 @@ public class ImportData {
                 System.out.print("New Task ID = ");
                 System.out.println(ID);
             }
+            // save Task ID into the entity field
+            timesheet.setTimesheetTaskID(ID);
 
+            // get employee from DB by name
+            Employee employee = employeeDao.getEmployeeByName(EmployeeNameFile);
+            // get employee ID
+            ID = employee.getEmployeeID();
+            // save employee ID into the entity field
+            timesheet.setTimesheetEmployeeID(ID);
 
+            // save date into the entity fields
+            timesheet.setStartTime(StartTimeFile);
+            timesheet.setFinishTime(FinishTimeFile);
 
+            // save timesheet into DB
+            timesheetDao.saveTimesheet(timesheet);
 
         }
         scanner.close();

@@ -24,4 +24,20 @@ public class Timesheet implements Serializable {
     @Column(name="finish_time")
     public Date FinishTime;
 
+    public void setTimesheetTaskID(int fp_TaskID){
+        this.TimesheetTaskID = fp_TaskID;
+    }
+
+    public void setTimesheetEmployeeID (int fp_EmployeeID){
+        this.TimesheetEmployeeID = fp_EmployeeID;
+    }
+
+    public void setStartTime (Date fp_StartTime) {
+        this.StartTime = fp_StartTime;
+    }
+
+    public void setFinishTime (Date fp_FinishTime) {
+        this.FinishTime = fp_FinishTime;
+    }
+
 }
