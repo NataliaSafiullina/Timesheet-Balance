@@ -5,9 +5,11 @@
 import dao.EmployeeDao;
 import dao.PositionDao;
 import dao.TaskDao;
+import dao.TimesheetDao;
 import entity.Employee;
 import entity.Position;
 import entity.Task;
+import entity.Timesheet;
 
 import java.io.FileNotFoundException;
 import java.text.ParseException;
@@ -43,7 +45,6 @@ public class Main {
                         break;
                 }
                 break;
-
             case "import":
                 System.out.println("Importing file " + args[1]);
                 switch (args[1]) {
@@ -58,11 +59,11 @@ public class Main {
                         break;
                 }
                 break;
-/*
             case "get":
                 System.out.println("Timesheet for employee " + args[1]);
                 printTimesheet(args[1]);
                 break;
+/*
             case "remove":
                 System.out.println("Removing timesheet with id " + args[1]);
                 removeTimesheet(Integer.valueOf(args[1]));
@@ -87,6 +88,14 @@ public class Main {
     }
 
     public static void printTimesheet(String employeeName) {
+        // get employee-entity from DB by name
+        EmployeeDao employeeDao = new EmployeeDao();
+        Employee employee = employeeDao.getEmployeeByName(employeeName);
+        // get list of timesheet for employee
+        TimesheetDao timesheetDao = new TimesheetDao();
+        List<Timesheet> timesheet_list = timesheetDao.getTimesheet(employee);
+        timesheet_list.forEach(timesheet -> System.out.println(timesheet.getTimesheetTaskID() + "\t" + timesheet.getStartTime() + "\t" + timesheet.getFinishTime()));
+
 
     }
 

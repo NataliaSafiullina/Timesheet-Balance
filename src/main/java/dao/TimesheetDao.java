@@ -4,6 +4,7 @@ import entity.Employee;
 import entity.Timesheet;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import utils.HibernateUtil;
 
 import java.util.List;
@@ -33,6 +34,14 @@ public class TimesheetDao {
     }
 
     public List<Timesheet> getTimesheet(Employee employee) {
-        return null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Query<Timesheet> query = session.createQuery("from Timesheet where TimesheetEmployeeID = :P1 ", Timesheet.class);
+            query.setParameter("P1", employee.getEmployeeID());
+            return query.list();
+        }  catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

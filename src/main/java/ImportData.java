@@ -76,16 +76,22 @@ public class ImportData {
         TaskDao taskDao = new TaskDao();
         TimesheetDao timesheetDao = new TimesheetDao();
         EmployeeDao employeeDao = new EmployeeDao();
-        int ID;
+        int ID, index;
         // DATA_PATH is described at the beginning
         Scanner scanner = new Scanner(new File(DATA_PATH + File.separatorChar + filename));
         // formatter for dates
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         // read lines one by one
+        index = 0;
         while (scanner.hasNextLine()) {
             // take line from file
             String line = scanner.nextLine();
+            index++;
+            System.out.print(index);
+            System.out.println(line);
+
+            // fields in line have delimiter como
             Scanner s = new Scanner(line).useDelimiter(",");
 
             // create object timesheet as entity Timesheet

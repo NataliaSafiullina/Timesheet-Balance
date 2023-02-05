@@ -40,4 +40,10 @@ public class Timesheet implements Serializable {
         this.FinishTime = fp_FinishTime;
     }
 
+    public Date getStartTime () { return StartTime; }
+
+    public Date getFinishTime () { return FinishTime; }
+
+    public Integer getTimesheetTaskID () { return TimesheetTaskID; }
+
 }
