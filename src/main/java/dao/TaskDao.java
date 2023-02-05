@@ -48,4 +48,17 @@ public class TaskDao {
             return null;
         }
     }
+
+    public String getTaskNameByID (int TaskID) {
+        try {
+            String TaskName;
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Query<Task> query = session.createQuery("from Task where TaskID = :P1 ", Task.class);
+            query.setParameter("P1", TaskID);
+            return query.list().get(0).getTaskName();
+        }  catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

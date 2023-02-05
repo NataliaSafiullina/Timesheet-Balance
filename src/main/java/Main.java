@@ -91,12 +91,12 @@ public class Main {
         // get employee-entity from DB by name
         EmployeeDao employeeDao = new EmployeeDao();
         Employee employee = employeeDao.getEmployeeByName(employeeName);
+        // data access object for task
+        TaskDao taskDao = new TaskDao();
         // get list of timesheet for employee
         TimesheetDao timesheetDao = new TimesheetDao();
         List<Timesheet> timesheet_list = timesheetDao.getTimesheet(employee);
-        timesheet_list.forEach(timesheet -> System.out.println(timesheet.getTimesheetTaskID() + "\t" + timesheet.getStartTime() + "\t" + timesheet.getFinishTime()));
-
-
+        timesheet_list.forEach(timesheet -> System.out.println(taskDao.getTaskNameByID(timesheet.getTimesheetTaskID()) + "\t" + timesheet.getStartTime() + "\t" + timesheet.getFinishTime()));
     }
 
     public static void removeTimesheet(Integer timesheetId) {
