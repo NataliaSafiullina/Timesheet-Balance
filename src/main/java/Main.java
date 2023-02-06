@@ -88,6 +88,7 @@ public class Main {
     }
 
     public static void printTimesheet(String employeeName) {
+        // TODO if an employee name is not unique we will get an error, should be a cycle
         // get employee-entity from DB by name
         EmployeeDao employeeDao = new EmployeeDao();
         Employee employee = employeeDao.getEmployeeByName(employeeName);
