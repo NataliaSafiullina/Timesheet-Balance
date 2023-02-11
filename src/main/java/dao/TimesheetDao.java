@@ -44,4 +44,16 @@ public class TimesheetDao {
             return null;
         }
     }
+
+    public Timesheet getTimesheetByID(Integer fp_ID) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Query<Timesheet> query = session.createQuery("from Timesheet where TimesheetID = :P1 ", Timesheet.class);
+            query.setParameter("P1", fp_ID);
+            return query.list().get(0);
+        }  catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

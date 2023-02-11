@@ -63,11 +63,11 @@ public class Main {
                 System.out.println("Timesheet for employee " + args[1]);
                 printTimesheet(args[1]);
                 break;
-/*
             case "remove":
                 System.out.println("Removing timesheet with id " + args[1]);
                 removeTimesheet(Integer.valueOf(args[1]));
                 break;
+/*
             case "report":
                 System.out.println("Report " + args[1]);
                 switch (args[1]) {
@@ -97,10 +97,18 @@ public class Main {
         // get list of timesheet for employee
         TimesheetDao timesheetDao = new TimesheetDao();
         List<Timesheet> timesheet_list = timesheetDao.getTimesheet(employee);
+        // print
         timesheet_list.forEach(timesheet -> System.out.println(taskDao.getTaskNameByID(timesheet.getTimesheetTaskID()) + "\t" + timesheet.getStartTime() + "\t" + timesheet.getFinishTime()));
     }
 
     public static void removeTimesheet(Integer timesheetId) {
+        // get timesheet whether it exists
+        TimesheetDao timesheetDao = new TimesheetDao();
+        Timesheet timesheet = new Timesheet();
+        timesheet = timesheetDao.getTimesheetByID(timesheetId);
+        if (timesheet != null) {
+
+        }
 
     }
 }
