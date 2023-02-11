@@ -168,3 +168,9 @@ mysql> CREATE TRIGGER del_task_on_del_timesheet AFTER DELETE ON timesheet FOR EA
 Query OK, 0 rows affected (0.44 sec)
 
 mysql> DELIMITER ;
+
+
+--- выбор самых 5 долгих задач
+
+mysql> select (select task_name from tasks where task_id=T.task_id) as Task, sec_to_time(sum(time_to_sec(timediff(finish_time,start_time)))) as Time 
+from timesheet T group by task_id order by 2 desc limit 20;

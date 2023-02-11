@@ -1,6 +1,6 @@
-//import Report.Top5costTasks;
-//import Report.Top5employees;
-//import Report.Top5longTasks;
+import Report.Top5costTasks;
+import Report.Top5employees;
+import Report.Top5longTasks;
 
 import dao.EmployeeDao;
 import dao.PositionDao;
@@ -67,7 +67,6 @@ public class Main {
                 System.out.println("Removing timesheet with id " + args[1]);
                 removeTimesheet(Integer.valueOf(args[1]));
                 break;
-/*
             case "report":
                 System.out.println("Report " + args[1]);
                 switch (args[1]) {
@@ -83,7 +82,7 @@ public class Main {
                 }
                 break;
 
- */
+
         }
     }
 
@@ -98,7 +97,8 @@ public class Main {
         TimesheetDao timesheetDao = new TimesheetDao();
         List<Timesheet> timesheet_list = timesheetDao.getTimesheet(employee);
         // print
-        timesheet_list.forEach(timesheet -> System.out.println(taskDao.getTaskNameByID(timesheet.getTimesheetTaskID()) + "\t" + timesheet.getStartTime() + "\t" + timesheet.getFinishTime()));
+        System.out.println("ID_Timesheet"+"\t"+"Task"+"\t"+"Start_Time"+"\t"+"Finish_Time");
+        timesheet_list.forEach(timesheet -> System.out.println(timesheet.getTimesheetTaskID()+ "\t" + taskDao.getTaskNameByID(timesheet.getTimesheetTaskID()) + "\t" + timesheet.getStartTime() + "\t" + timesheet.getFinishTime()));
     }
 
     public static void removeTimesheet(Integer timesheetId) {

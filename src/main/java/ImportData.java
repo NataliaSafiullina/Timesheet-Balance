@@ -76,7 +76,7 @@ public class ImportData {
         TaskDao taskDao = new TaskDao();
         TimesheetDao timesheetDao = new TimesheetDao();
         EmployeeDao employeeDao = new EmployeeDao();
-        int ID, index;
+        int TaskID, EmployeeID, index;
         // DATA_PATH is described at the beginning
         Scanner scanner = new Scanner(new File(DATA_PATH + File.separatorChar + filename));
         // formatter for dates
@@ -88,8 +88,7 @@ public class ImportData {
             // take line from file
             String line = scanner.nextLine();
             index++;
-            System.out.print(index);
-            System.out.println(line);
+            System.out.println("\n" + index + "\t" + line);
 
             // fields in line have delimiter como
             Scanner s = new Scanner(line).useDelimiter(",");
@@ -106,24 +105,19 @@ public class ImportData {
             // read finish time from the line
             Date FinishTimeFile = dateFormat.parse(s.next());
 
-            System.out.print("Task name = ");
-            System.out.println(TaskNameFile);
-            System.out.print("Employee name = ");
-            System.out.println(EmployeeNameFile);
-            System.out.print("Start time = ");
-            System.out.println(StartTimeFile);
-            System.out.print("Finish time = ");
-            System.out.println(FinishTimeFile);
+            System.out.println("Task name = " + TaskNameFile);
+            System.out.println("Employee name = " + EmployeeNameFile);
+            System.out.println("Start time = " + StartTimeFile);
+            System.out.println("Finish time = " + FinishTimeFile);
 
             // get Task by name from file
             Task task_obj = taskDao.getTaskByName(TaskNameFile);
 
             if(task_obj != null) {
                 // get TaskID
-                ID = task_obj.getTaskID();
+                TaskID = task_obj.getTaskID();
                 // task exists in DB;
-                System.out.print("Task exists, ID = ");
-                System.out.println(ID);
+                System.out.println("Task exists, ID = " + TaskID);
             }
             else {
                 // task does not exist, we need to create it
@@ -137,19 +131,18 @@ public class ImportData {
                 // get Task by name from file
                 task_new = taskDao.getTaskByName(TaskNameFile);
                 // get TaskID of the task
-                ID = task_new.getTaskID();
-                System.out.print("New Task ID = ");
-                System.out.println(ID);
+                TaskID = task_new.getTaskID();
+                System.out.println("New Task ID = " + TaskID);
             }
             // save Task ID into the entity field
-            timesheet.setTimesheetTaskID(ID);
+            timesheet.setTimesheetTaskID(TaskID);
 
             // get employee from DB by name
             Employee employee = employeeDao.getEmployeeByName(EmployeeNameFile);
             // get employee ID
-            ID = employee.getEmployeeID();
+            EmployeeID = employee.getEmployeeID();
             // save employee ID into the entity field
-            timesheet.setTimesheetEmployeeID(ID);
+            timesheet.setTimesheetEmployeeID(EmployeeID);
 
             // save date into the entity fields
             timesheet.setStartTime(StartTimeFile);

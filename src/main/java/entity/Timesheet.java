@@ -46,4 +46,6 @@ public class Timesheet implements Serializable {
 
     public Integer getTimesheetTaskID () { return TimesheetTaskID; }
 
+    public Integer getTimesheetEmployeeID () { return TimesheetEmployeeID; }
+
 }

@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Employee;
+import entity.Task;
 import entity.Timesheet;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -70,6 +71,16 @@ public class TimesheetDao {
             Query<Timesheet> query = session.createQuery("from Timesheet where TimesheetID = :P1 ", Timesheet.class);
             query.setParameter("P1", fp_ID);
             return query.list().get(0);
+        }  catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List top5taskInTimesheet () {
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("SELECT TS.TimesheetTaskID, sec_to_time(sum(time_to_sec(timediff(TS.FinishTime,TS.StartTime)))) from Timesheet TS group by TS.TimesheetTaskID order by 2 desc limit 5").list();
         }  catch (Exception e) {
             e.printStackTrace();
             return null;
