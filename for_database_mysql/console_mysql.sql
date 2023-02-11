@@ -51,7 +51,7 @@ mysql> delimiter ;
 
 
 DELIMITER //
-CREATE TRIGGER `balance`.`ins_timesheet` BEFORE INSERT ON `balance`.`timesheet` FOR EACH ROW
+CREATE TRIGGER `balance`.`insert_timesheet` BEFORE INSERT ON `balance`.`timesheet` FOR EACH ROW
 BEGIN
 	DECLARE rowcount INT;
 	
@@ -62,7 +62,7 @@ BEGIN
 		SIGNAL SQLSTATE `45000` SET MESSAGE_TEXT = `Employee can not execute a few tasks at the same time.`;
 END//
 
-CREATE TRIGGER `balance`.`ins_timesheet` BEFORE UPDATE ON `balance`.`timesheet` FOR EACH ROW
+CREATE TRIGGER `balance`.`update_timesheet` BEFORE UPDATE ON `balance`.`timesheet` FOR EACH ROW
 BEGIN
 	DECLARE rowcount INT;
 	
@@ -154,3 +154,17 @@ mysql> select * from timesheet_history;
 |            6 | Natalia       | Report1209 | 2023-01-07 19:00:00 | 2023-01-07 20:00:00 |
 +--------------+---------------+------------+---------------------+---------------------+
 1 row in set (0.00 sec)
+
+--- триггер на удаление записи в timesheet, удаляет задачу в таблице tasks, если больше нет таймшитов с такой задачей.
+
+mysql> DELIMITER //
+mysql> ;
+    -> //
+ERROR 1065 (42000): Query was empty
+mysql>
+mysql>
+mysql> CREATE TRIGGER del_task_on_del_timesheet AFTER DELETE ON timesheet FOR EACH ROW BEGIN DECLARE rowcount INT; SELECT COUNT(1) INTO rowcount FROM timesheet ts WHERE ts.task_id = OLD.task_id;  IF rowcount < 1 THEN DELETE FROM tasks t WHERE t.task_id = OLD.task_id; END IF; END;
+    -> //
+Query OK, 0 rows affected (0.44 sec)
+
+mysql> DELIMITER ;

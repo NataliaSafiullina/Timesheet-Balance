@@ -40,7 +40,7 @@ public class TimesheetDao {
 
             transaction.commit();
 
-            return "Timesheet is removed";
+            return " is removed";
 
         } catch (Exception e) {
             if (transaction != null) {
@@ -48,7 +48,7 @@ public class TimesheetDao {
             }
             e.printStackTrace();
 
-            return "Timesheet is not removed";
+            return " is not removed";
         }
     }
 

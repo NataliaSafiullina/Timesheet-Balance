@@ -109,10 +109,10 @@ public class Main {
         // if timesheet exists than remove it
         if (timesheet != null) {
             String result = timesheetDao.removeTimesheet(timesheet);
-            System.out.println(result);
+            System.out.println("Timesheet ID "+ timesheetId + result);
         }
         else {
-            System.out.println("Timesheet does not exist.");
+            System.out.println("Timesheet ID "+ timesheetId +" does not exist.");
         }
     }
 }
