@@ -29,8 +29,27 @@ public class TimesheetDao {
 
     }
 
-    public Timesheet removeTimesheet(Integer id) {
-        return null;
+    public String removeTimesheet(Timesheet timesheet) {
+        // try to remove row in transaction
+        Transaction transaction = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+
+            transaction = session.beginTransaction();
+            session.remove(timesheet);
+
+            transaction.commit();
+
+            return "Timesheet is removed";
+
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+
+            return "Timesheet is not removed";
+        }
     }
 
     public List<Timesheet> getTimesheet(Employee employee) {

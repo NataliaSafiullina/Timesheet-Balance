@@ -106,9 +106,13 @@ public class Main {
         TimesheetDao timesheetDao = new TimesheetDao();
         Timesheet timesheet = new Timesheet();
         timesheet = timesheetDao.getTimesheetByID(timesheetId);
+        // if timesheet exists than remove it
         if (timesheet != null) {
-
+            String result = timesheetDao.removeTimesheet(timesheet);
+            System.out.println(result);
         }
-
+        else {
+            System.out.println("Timesheet does not exist.");
+        }
     }
 }
