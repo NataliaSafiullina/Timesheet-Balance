@@ -84,6 +84,7 @@ public class TimesheetDao {
             String hql = "select TS.TimesheetTaskID," +
                     " (sum(time_to_sec(timediff(TS.FinishTime,TS.StartTime)))) as Time" +
                     " from Timesheet TS group by TS.TimesheetTaskID order by Time desc";
+            // use class Object, root class
             Query<Object[]> query = session.createQuery(hql, Object[].class);
             // this instead of sql: limit 5
             query.setMaxResults(5);
