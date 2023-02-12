@@ -82,13 +82,13 @@ public class TimesheetDao {
             Session session = HibernateUtil.getSessionFactory().openSession();
             // form query string
             String hql = "select TS.TimesheetTaskID," +
-                    " sec_to_time(sum(time_to_sec(timediff(TS.FinishTime,TS.StartTime)))) as Time" +
+                    " (sum(time_to_sec(timediff(TS.FinishTime,TS.StartTime)))) as Time" +
                     " from Timesheet TS group by TS.TimesheetTaskID order by Time desc";
-            Query query = session.createQuery(hql);
+            Query<Object[]> query = session.createQuery(hql, Object[].class);
             // this instead of sql: limit 5
             query.setMaxResults(5);
             // return results in list
-            return query.getResultList();
+            return query.list();
         }  catch (Exception e) {
             e.printStackTrace();
             return null;
