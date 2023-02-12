@@ -80,7 +80,15 @@ public class TimesheetDao {
     public List top5taskInTimesheet () {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            return session.createQuery("SELECT TS.TimesheetTaskID, sec_to_time(sum(time_to_sec(timediff(TS.FinishTime,TS.StartTime)))) from Timesheet TS group by TS.TimesheetTaskID order by 2 desc limit 5").list();
+            // form query string
+            String hql = "select TS.TimesheetTaskID," +
+                    " sec_to_time(sum(time_to_sec(timediff(TS.FinishTime,TS.StartTime)))) as Time" +
+                    " from Timesheet TS group by TS.TimesheetTaskID order by Time desc";
+            Query query = session.createQuery(hql);
+            // this instead of sql: limit 5
+            query.setMaxResults(5);
+            // return results in list
+            return query.getResultList();
         }  catch (Exception e) {
             e.printStackTrace();
             return null;

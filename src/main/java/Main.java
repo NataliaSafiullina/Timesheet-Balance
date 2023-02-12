@@ -71,6 +71,7 @@ public class Main {
                 System.out.println("Report " + args[1]);
                 switch (args[1]) {
                     case "top5longTasks":
+                        // report top5longTasks
                         Top5longTasks.report();
                         break;
                     case "top5costTasks":

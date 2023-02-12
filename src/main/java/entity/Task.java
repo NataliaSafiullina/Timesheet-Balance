@@ -21,5 +21,6 @@ public class Task implements Serializable {
     }
 
     public int getTaskID () { return TaskID; }
+
     public String getTaskName () { return TaskName; }
 }

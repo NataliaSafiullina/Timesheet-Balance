@@ -1,9 +1,6 @@
 package utils;
 
-import entity.Employee;
-import entity.Position;
-import entity.Task;
-import entity.Timesheet;
+import entity.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
