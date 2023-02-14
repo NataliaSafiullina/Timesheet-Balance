@@ -95,4 +95,33 @@ public class TimesheetDao {
             return null;
         }
     }
+
+    public List<Object[]> top5taskInCost () {
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            // form query string
+            /*
+            String hql = "select TS.TimesheetTaskID," +
+                    " (sum(time_to_sec(timediff(TS.FinishTime,TS.StartTime)))) as Time" +
+                    " from Timesheet TS group by TS.TimesheetTaskID order by Time desc";
+
+             */
+            String HQL = "with" +
+                    " emp_rate as (select e.EmployeeID as Emp, p.Rate as Rate from Employee e " +
+                    "join Position p on e.EmployeePosition = p.Position)" +
+                    " select T.TimesheetTaskID, " +
+                    "sum((time_to_sec(timediff(T.FinishTime,T.StartTime)))/3600*ER.Rate) as COST, " +
+                    "(select TaskName from Task where TaskID = T.TimesheetTaskID) as Task " +
+                    "from Timesheet T, emp_rate ER where T.employee_id = ER.Emp group by T.task_id order by COST desc";
+            // use class Object, root class
+            Query<Object[]> query = session.createQuery(HQL, Object[].class);
+            // this instead of sql: limit 5
+            query.setMaxResults(5);
+            // return results in list
+            return query.list();
+        }  catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
