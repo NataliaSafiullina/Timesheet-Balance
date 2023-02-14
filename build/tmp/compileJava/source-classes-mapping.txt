@@ -8,16 +8,14 @@ entity/Position.java
  entity.Position
 entity/Timesheet.java
  entity.Timesheet
-Report/Top5costTasks.java
- Report.Top5costTasks
+dao/TaskDao.java
+ dao.TaskDao
 Report/Top5employees.java
  Report.Top5employees
 utils/HibernateUtil.java
  utils.HibernateUtil
 dao/PositionDao.java
  dao.PositionDao
-dao/TaskDao.java
- dao.TaskDao
 Main.java
  Main
 Report/Top5longTasks.java
@@ -26,3 +24,5 @@ dao/TimesheetDao.java
  dao.TimesheetDao
 ImportData.java
  ImportData
+Report/Top5costTasks.java
+ Report.Top5costTasks

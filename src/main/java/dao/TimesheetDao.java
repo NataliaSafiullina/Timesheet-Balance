@@ -77,7 +77,7 @@ public class TimesheetDao {
         }
     }
 
-    public List top5taskInTimesheet () {
+    public List<Object[]> top5taskInTimesheet () {
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             // form query string
