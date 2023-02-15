@@ -101,18 +101,21 @@ public class TimesheetDao {
             Session session = HibernateUtil.getSessionFactory().openSession();
             // form query string
             /*
-            String hql = "select TS.TimesheetTaskID," +
-                    " (sum(time_to_sec(timediff(TS.FinishTime,TS.StartTime)))) as Time" +
-                    " from Timesheet TS group by TS.TimesheetTaskID order by Time desc";
-
-             */
-            String HQL = "with" +
-                    " emp_rate as (select e.EmployeeID as Emp, p.Rate as Rate from Employee e " +
-                    "join Position p on e.EmployeePosition = p.Position)" +
-                    " select T.TimesheetTaskID, " +
-                    "sum((time_to_sec(timediff(T.FinishTime,T.StartTime)))/3600*ER.Rate) as COST, " +
-                    "(select TaskName from Task where TaskID = T.TimesheetTaskID) as Task " +
-                    "from Timesheet T, emp_rate ER where T.employee_id = ER.Emp group by T.task_id order by COST desc";
+            SELECT TS.task_id ID,
+            sum((time_to_sec(timediff(TS.finish_time,TS.start_time)))/3600*P.rate) AS COST
+            FROM timesheet TS
+            INNER JOIN employees E on TS.employee_id = E.employee_id
+            INNER JOIN positions P on E.employee_position = P.position
+            GROUP BY TS.task_id
+            ORDER BY 2 DESC limit 20;
+            */
+            String HQL = "SELECT TS.TimesheetTaskID, " +
+                    "sum((time_to_sec(timediff(TS.FinishTime,TS.StartTime)))/3600 * P.Rate) AS COST " +
+                    "FROM Timesheet TS " +
+                    "INNER JOIN Employee E on TS.TimesheetEmployeeID = E.EmployeeID " +
+                    "INNER JOIN Position P on E.EmployeePosition = P.Position " +
+                    "GROUP BY TS.TimesheetTaskID " +
+                    "ORDER BY COST DESC";
             // use class Object, root class
             Query<Object[]> query = session.createQuery(HQL, Object[].class);
             // this instead of sql: limit 5

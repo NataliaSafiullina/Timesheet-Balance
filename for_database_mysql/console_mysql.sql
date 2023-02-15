@@ -174,3 +174,11 @@ mysql> DELIMITER ;
 
 mysql> select (select task_name from tasks where task_id=T.task_id) as Task, sec_to_time(sum(time_to_sec(timediff(finish_time,start_time)))) as Time 
 from timesheet T group by task_id order by 2 desc limit 20;
+
+
+mysql> with emp_rate as (select e.employee_id as Emp, p.rate as Rate from employees e join positions p on e.employee_position = p.position) select T.task_id ID, sum((time_to_sec(timediff(T.finish_time,T.start_time)))/3600*ER.rate) as COST, (select task_name from tasks where task_id = T.task_id) as Task from timesheet T, emp_rate ER where T.employee_id = ER.Emp group by T.task_id order by 2 desc limit 20;
+
+select T.task_id ID, sum((time_to_sec(timediff(T.finish_time,T.start_time)))/3600*ER.rate) as COST, (select task_name from tasks where task_id = T.task_id) as Task from timesheet T, (select e.employee_id as Emp, p.rate as Rate from employees e join positions p on e.employee_position = p.position) ER where T.employee_id = ER.Emp group by T.task_id order by 2 desc limit 20;
+
+mysql> select TS.employee_id as ID, E.employee_name as Name, sum(time_to_sec(timediff(TS.finish_time,TS.start_time)))/3600 as TotalHours from timesheet TS inner join employees E on TS.employee_id = E.employee_id group by ID order by TotalHours desc;
+
