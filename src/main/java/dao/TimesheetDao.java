@@ -127,4 +127,28 @@ public class TimesheetDao {
             return null;
         }
     }
+
+    public List<Object[]> top5employeeInTime () {
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            // form query string
+            String HQL = "select TS.TimesheetEmployeeID, " +
+                    "E.EmployeeName, " +
+                    "sum(time_to_sec(timediff(TS.FinishTime,TS.StartTime)))/3600 as TotalHours " +
+                    "from Timesheet TS " +
+                    "inner join Employee E on TS.TimesheetEmployeeID = E.EmployeeID " +
+                    "group by TS.TimesheetEmployeeID " +
+                    "order by TotalHours desc";
+            // use class Object, root class
+            Query<Object[]> query = session.createQuery(HQL, Object[].class);
+            // this instead of sql: limit 5
+            query.setMaxResults(5);
+            // return results in list
+            return query.list();
+        }  catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
