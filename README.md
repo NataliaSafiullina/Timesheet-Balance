@@ -50,10 +50,10 @@
 
 #### Манипуляции с данными в БД:
 
-7. java -jar Balance.main.jar get Robert
+7. java -jar Balance.main.jar get *Robert*
 – выводит таймшиты сотрудника по его имени.
 
-8. java -jar Balance.main.jar remove TimesheetID 
+8. java -jar Balance.main.jar remove *TimesheetID* 
 – удаление записи таймшита по идентификатору.
 
 #### Отчеты:
