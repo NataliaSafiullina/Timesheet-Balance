@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Top5employees {
     public static void report() {
-        System.out.println("Top 5 Employee: ");
+        System.out.println("Top 5 Employees: ");
         TimesheetDao timesheetDao = new TimesheetDao();
         // get results of query as list
         List<Object[]> list = timesheetDao.top5employeeInTime();
