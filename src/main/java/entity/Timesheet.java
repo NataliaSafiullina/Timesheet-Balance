@@ -48,4 +48,6 @@ public class Timesheet implements Serializable {
 
     public Integer getTimesheetEmployeeID () { return TimesheetEmployeeID; }
 
+    public Integer getTimesheetID () { return TimesheetID;}
+
 }

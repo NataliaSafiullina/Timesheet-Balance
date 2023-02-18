@@ -1,7 +1,5 @@
 package Report;
 
-//import dao.TaskDao;
-//import entity.Task;
 import dao.TaskDao;
 import dao.TimesheetDao;
 
@@ -25,5 +23,5 @@ public class Top5longTasks {
             System.out.printf("%10s | %-20s | %-10s \n", TaskID, taskDao.getTaskNameByID(TaskID), TaskTime/3600);
         }
 
-    };
+    }
 }
