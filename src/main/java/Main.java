@@ -101,7 +101,6 @@ public class Main {
         System.out.printf("%12s | %-20s | %-30s | %-30s \n", "____________", "____________________", "______________________________", "______________________________");
         System.out.printf("%12s | %-20s | %-30s | %-30s \n", "Timesheet ID", "Task", "Start Time","Finish Time");
         System.out.printf("%12s | %-20s | %-30s | %-30s \n", "____________", "____________________", "______________________________", "______________________________");
-
         timesheet_list.forEach(timesheet -> System.out.printf("%12s | %-20s | %-30s | %-30s \n",timesheet.getTimesheetTaskID(),taskDao.getTaskNameByID(timesheet.getTimesheetTaskID()), timesheet.getStartTime(), timesheet.getFinishTime()));
     }
 
