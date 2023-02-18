@@ -12,7 +12,6 @@ public class Top5costTasks {
         TaskDao taskDao = new TaskDao();
         // get results of query as list
         List<Object[]> list = timesheetDao.top5taskInCost();
-        // print
         System.out.printf("%10s | %-20s | %-10s \n", "__________", "____________________", "__________");
         System.out.printf("%10s | %-20s | %-10s \n", "Task ID", "Task Name", "Total Cost");
         System.out.printf("%10s | %-20s | %-10s \n", "__________", "____________________", "__________");
@@ -21,7 +20,5 @@ public class Top5costTasks {
             Long TaskTime = (Long) o[1];
             System.out.printf("%10s | %-20s | %-10s \n", TaskID, taskDao.getTaskNameByID(TaskID), TaskTime);
         }
-
-
-    };
+    }
 }

@@ -1,5 +1,7 @@
 package Report;
 
+//import dao.TaskDao;
+//import entity.Task;
 import dao.TaskDao;
 import dao.TimesheetDao;
 
@@ -13,7 +15,6 @@ public class Top5longTasks {
         TaskDao taskDao = new TaskDao();
         // get results of query as list
         List<Object[]> list = timesheetDao.top5taskInTimesheet();
-        // print
         System.out.printf("%10s | %-20s | %-10s \n", "__________", "____________________", "__________");
         System.out.printf("%10s | %-20s | %-10s \n", "Task ID", "Task Name", "Time");
         System.out.printf("%10s | %-20s | %-10s \n", "__________", "____________________", "__________");
@@ -22,6 +23,5 @@ public class Top5longTasks {
             Long TaskTime = (Long) o[1];
             System.out.printf("%10s | %-20s | %-10s \n", TaskID, taskDao.getTaskNameByID(TaskID), TaskTime/3600);
         }
-
     }
 }
