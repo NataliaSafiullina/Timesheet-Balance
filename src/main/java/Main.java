@@ -98,8 +98,11 @@ public class Main {
         TimesheetDao timesheetDao = new TimesheetDao();
         List<Timesheet> timesheet_list = timesheetDao.getTimesheet(employee);
         // print
-        System.out.println("ID_Timesheet"+"\t"+"Task"+"\t"+"Start_Time"+"\t"+"Finish_Time");
-        timesheet_list.forEach(timesheet -> System.out.println(timesheet.getTimesheetTaskID()+ "\t" + taskDao.getTaskNameByID(timesheet.getTimesheetTaskID()) + "\t" + timesheet.getStartTime() + "\t" + timesheet.getFinishTime()));
+        System.out.printf("%12s | %-20s | %-30s | %-30s \n", "____________", "____________________", "______________________________", "______________________________");
+        System.out.printf("%12s | %-20s | %-30s | %-30s \n", "Timesheet ID", "Task", "Start Time","Finish Time");
+        System.out.printf("%12s | %-20s | %-30s | %-30s \n", "____________", "____________________", "______________________________", "______________________________");
+
+        timesheet_list.forEach(timesheet -> System.out.printf("%12s | %-20s | %-30s | %-30s \n",timesheet.getTimesheetTaskID(),taskDao.getTaskNameByID(timesheet.getTimesheetTaskID()), timesheet.getStartTime(), timesheet.getFinishTime()));
     }
 
     public static void removeTimesheet(Integer timesheetId) {

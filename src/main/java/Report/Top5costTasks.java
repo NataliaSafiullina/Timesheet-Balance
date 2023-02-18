@@ -12,6 +12,7 @@ public class Top5costTasks {
         TaskDao taskDao = new TaskDao();
         // get results of query as list
         List<Object[]> list = timesheetDao.top5taskInCost();
+        System.out.printf("%10s | %-20s | %-10s \n", "__________", "____________________", "__________");
         System.out.printf("%10s | %-20s | %-10s \n", "Task ID", "Task Name", "Total Cost");
         System.out.printf("%10s | %-20s | %-10s \n", "__________", "____________________", "__________");
         for (Object[] o : list) {
